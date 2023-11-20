@@ -1,3 +1,6 @@
+
+// 経路圧縮 , rank by sizeを行っています.
+
 class UnionFind {
 
         private int [] rank , parents , size ;
