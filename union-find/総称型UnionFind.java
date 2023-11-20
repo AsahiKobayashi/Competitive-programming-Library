@@ -1,3 +1,6 @@
+
+// 経路圧縮 , rank by sizeを行っています.
+
 class UnionFind <K> {
 
         private Map<K, K> parent;
@@ -22,7 +25,6 @@ class UnionFind <K> {
 
         public K root(K key) {
             if (!parent.containsKey(key)) throw new IllegalArgumentException("Key not found!");
-
             if (!parent.get(key).equals(key)) {
                 parent.put(key, root(parent.get(key)));
             }
@@ -38,7 +40,7 @@ class UnionFind <K> {
             par = rank.get(left) > rank.get(right) ? left : right ;
             ch = rank.get(left) > rank.get(right) ? right : left ;
             parent.put(ch , par);
-            rank.put(par , rank.getOrDefault(par , 0) + 1);
+            if(rank.get(ch) == rank.get(par)) rank.put(par , rank.getOrDefault(par , 0) + 1);
         }
 
         public boolean same(K key1, K key2) {
