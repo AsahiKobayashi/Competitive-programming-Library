@@ -45,4 +45,4 @@ class UnionFind <K> {
             return root(key1).equals(root(key2));
         }
 
-    }
+}
