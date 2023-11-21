@@ -15,7 +15,8 @@ class SegmentTree{
             this.tree = new long[2 * n];
             for(int i = 0 ; i < 2 * n ; i ++ ) tree[i] = init ;
         }
-        void update(int index , long value){
+        
+        public void update(int index , long value){
             index += n ;
             tree[index] = value ;
             while(index > 0){
@@ -23,7 +24,8 @@ class SegmentTree{
                 tree[index] = op.apply(tree[2 * index] , tree[2 * index + 1]);
             }
         }
-        long query(int l , int r){
+        
+        public long query(int l , int r){
             l += n ; r += n ;
             long res = init ;
             while(l < r){
@@ -34,12 +36,11 @@ class SegmentTree{
             }
             return res ;
         }
-        void debug() 
-        {
+        
+        public void debug() {
             for(int i = n ; i < n + size ; i ++ ) {
-                out.print(tree[i]+" ");
+                System.out.print(tree[i]+" ");
             }
-            out.println();
-            out.flush();
+            System.out.println();
         }
-    }
+}
