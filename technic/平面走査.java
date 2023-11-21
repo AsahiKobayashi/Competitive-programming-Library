@@ -1,13 +1,11 @@
-    class SCANLINE
-    {
-        List<Integer> [] segment ;
-        List<IntPair> [] border ;
-        long [] query ;
-        FenwickTree bit ;
-        int l , r ;
-        /*
-         * l,rの区間に収まりきらない場合、座圧する必要あり.
-         */
+    class Scanline {
+        
+        private List<Integer> [] segment ;
+        private List<IntPair> [] border ;
+        private long [] query ;
+        private FenwickTree bit ;
+        private int l , r ;
+
         PlaneSweep(int N , int Q)
         {
             this.segment = new ArrayList[N];
@@ -22,12 +20,12 @@
                 border[i] = new ArrayList<>();
             }
         }
-        // 目標の区間
+        // 条件を満たす区間
         public void add(int l , int r)
         {
             segment[l].add(r);
         }
-        // 目標を包含するべき区間
+        // クエリ区間
         public void add(int l , int r , int index)
         {
             border[l].add(new IntPair(r, index));
@@ -38,13 +36,11 @@
             return query[index];
         }
         
-        void start()
-        {
-            for(int x = l - 1 ; x >= 0 ; x -- )
-            {   
+        public void start() {
+            for(int x = l - 1 ; x >= 0 ; x -- ) {   
                 for(int y : segment[x]) bit.add(y, 1);
-                // 問題によって異なる.
                 for(var p : border[x]) query[p.se] = bit.sum(0 , p.fi + 1);
             }
         }
-    }
+        
+}
