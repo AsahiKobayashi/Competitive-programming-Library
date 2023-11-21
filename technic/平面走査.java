@@ -7,7 +7,7 @@ class Scanline {
         private FenwickTree bit ;
         private int l , r ;
 
-        PlaneSweep(int N , int Q) {
+        Scanline(int N , int Q) {
             this.segment = new ArrayList[N];
             this.border = new ArrayList[N];
             this.bit = new FenwickTree(N);
