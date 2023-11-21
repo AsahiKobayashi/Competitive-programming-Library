@@ -1,4 +1,5 @@
-    class Scanline {
+// 任意の区間内に含まれる、条件を満たす範囲の個数を求める. O(NlogN)
+class Scanline {
         
         private List<Integer> [] segment ;
         private List<IntPair> [] border ;
