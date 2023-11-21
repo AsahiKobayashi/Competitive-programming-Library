@@ -1,41 +1,41 @@
 class SegmentTree <T> {
 
     private int n ;
-    private T init ;
-    private T [] tree ;
+    private T e ;
+    private T [] dat ;
     private int size ;
     private BinaryOperator<T> op ;
 
     @SuppressWarnings ("unchecked")
-    SegmentTree(int size , T init , BinaryOperator<T> op) {
+    SegmentTree(int size , T e , BinaryOperator<T> op) {
         this.size = size;
-        this.init = init ;
+        this.e = e ;
         this.op = op ;
         n = 1 ;
         while(n <= size) n *= 2 ;
-        this.tree = (T []) new Object[2 * n];
-        for(int i = 0 ; i < 2 * n ; i ++ ) tree[i] = init ;
+        this.dat = (T []) new Object[2 * n];
+        for(int i = 0 ; i < 2 * n ; i ++ ) dat[i] = e ;
     }
 
     public void update(int index , T value) {
         index += n ;
-        tree[index] = value ;
+        dat[index] = value ;
         while(index > 0) {
             index /= 2 ;
-            tree[index] = op.apply(tree[2 * index] , tree[2 * index + 1]);
+            dat[index] = op.apply(dat[2 * index] , dat[2 * index + 1]);
         }
     }
 
     public T query(int l , int r){
         l += n ; r += n ;
-        T res = init ;
+        T res = e ;
         while(l < r){
-            if(l % 2 == 1){ res = op.apply(res , tree[l]) ; l ++ ; }
+            if(l % 2 == 1){ res = op.apply(res , dat[l]) ; l ++ ; }
             l /= 2 ;
-            if(r % 2 == 1){ res = op.apply(res , tree[r - 1]) ; r -- ; }
+            if(r % 2 == 1){ res = op.apply(res , dat[r - 1]) ; r -- ; }
             r /= 2 ;
         }
         return res ;
     }
-        
+    
 }
