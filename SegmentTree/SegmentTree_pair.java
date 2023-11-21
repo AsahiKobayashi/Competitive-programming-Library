@@ -1,8 +1,4 @@
-public record P(int fi , int se) { 
-    public String toString() { 
-        return "("+fi+","+se+")";
-    }
-}
+public record P(int fi , int se) { }
 
 class SegmentTree_Pair {
 
@@ -23,7 +19,7 @@ class SegmentTree_Pair {
         for(int i = 0 ; i < 2 * n ; i ++ ) tree[i] = init ;
     }
 
-    void update(int index , P value) {
+    public void update(int index , P value) {
         index += n ;
         tree[index] = value ;
         while(index > 0) {
@@ -32,7 +28,7 @@ class SegmentTree_Pair {
         }
     }
 
-    P query(int l , int r){
+    public P query(int l , int r){
         l += n ; r += n ;
         P res = init ;
         while(l < r){
@@ -44,7 +40,7 @@ class SegmentTree_Pair {
         return res ;
     }
 
-    void debug() {
+    public void debug() {
         for(int i = n ; i < n + size ; i ++ ) {
             System.out.print(tree[i]+" ");
         }
