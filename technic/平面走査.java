@@ -1,4 +1,5 @@
 // 任意の区間内に含まれる、条件を満たす範囲の個数を求める. O(NlogN)
+// FenwickTreeが別途必要になります.
 class Scanline {
         
         private List<Integer> [] segment ;
