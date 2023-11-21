@@ -6,33 +6,28 @@
         private FenwickTree bit ;
         private int l , r ;
 
-        PlaneSweep(int N , int Q)
-        {
+        PlaneSweep(int N , int Q) {
             this.segment = new ArrayList[N];
             this.border = new ArrayList[N];
             this.bit = new FenwickTree(N);
             this.query = new long[Q];
             this.l = N ;
             this.r = 0 ;
-            for(int i = 0 ; i < N ; i ++ )
-            {
+            for(int i = 0 ; i < N ; i ++ ) {
                 segment[i] = new ArrayList<>();
                 border[i] = new ArrayList<>();
             }
         }
         // 条件を満たす区間
-        public void add(int l , int r)
-        {
+        public void add(int l , int r) {
             segment[l].add(r);
         }
         // クエリ区間
-        public void add(int l , int r , int index)
-        {
+        public void add(int l , int r , int index) {
             border[l].add(new IntPair(r, index));
         }
         // 結果を返す
-        public long query(int index)
-        {
+        public long query(int index) {
             return query[index];
         }
         
