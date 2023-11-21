@@ -1,5 +1,5 @@
 /* https://nyaannyaan.github.io/library/data-structure-2d/2d-segment-tree.hpp
- * Nyaanさんのcppコードをjavaにポーティングし少し変更を加えさせていただきました.
+ * Nyaanさんのcppコードをjavaにポーティングさせていただきました.
  */
 class SegmentTree2D {
 
