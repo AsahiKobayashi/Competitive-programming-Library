@@ -4,7 +4,7 @@
 class SegmentTree2D <T> {
 
     private int H, W;
-    private T [] seg;
+    private T [] dat;
     private BinaryOperator<T> op ;
     private T e ;
 
@@ -18,8 +18,8 @@ class SegmentTree2D <T> {
         H = W = 1;
         while (H < h) H <<= 1;
         while (W < w) W <<= 1;
-        seg = (T []) new Object[4 * H * W];
-        Arrays.fill(seg, e);
+        dat = (T []) new Object[4 * H * W];
+        Arrays.fill(dat, e);
     }
 
     private int id(int h, int w) {
@@ -27,37 +27,37 @@ class SegmentTree2D <T> {
     }
 
     public void set(int h, int w, T x) {
-        seg[id(h + H, w + W)] = x;
+        dat[id(h + H, w + W)] = x;
     }
     
     @SuppressWarnings("unchecked")
     public void build() {
         for (int w = W; w < 2 * W; w++) {
             for (int h = H - 1; h > 0; h--) {
-                seg[id(h, w)] = op.apply(seg[id(2 * h, w)], seg[id(2 * h + 1, w)]);
+                dat[id(h, w)] = op.apply(dat[id(2 * h, w)], dat[id(2 * h + 1, w)]);
             }
         }
         for (int h = 0; h < 2 * H; h++) {
             for (int w = W - 1; w > 0; w--) {
-                seg[id(h, w)] = op.apply(seg[id(h, 2 * w)], seg[id(h, 2 * w + 1)]);
+                dat[id(h, w)] = op.apply(dat[id(h, 2 * w)], dat[id(h, 2 * w + 1)]);
             }
         }
     }
     @SuppressWarnings("unchecked")
     public T get(int h, int w) {
-        return seg[id(h + H, w + W)];
+        return dat[id(h + H, w + W)];
     }
     @SuppressWarnings("unchecked")
     public void update(int h, int w, T x) {
         h += H;
         w += W;
-        seg[id(h, w)] = x;
+        dat[id(h, w)] = x;
         for (int i = h >> 1; i > 0; i >>= 1) {
-            seg[id(i, w)] = op.apply(seg[id(2 * i, w)] , seg[id(2 * i + 1, w)]);
+            dat[id(i, w)] = op.apply(dat[id(2 * i, w)] , dat[id(2 * i + 1, w)]);
         }
         for (; h > 0; h >>= 1) {
             for (int j = w >> 1; j > 0; j >>= 1) {
-                seg[id(h, j)] = op.apply(seg[id(h, 2 * j)], seg[id(h, 2 * j + 1)]);
+                dat[id(h, j)] = op.apply(dat[id(h, 2 * j)], dat[id(h, 2 * j + 1)]);
             }
         }
     }
@@ -67,12 +67,12 @@ class SegmentTree2D <T> {
         T res = e ;
         for (; w1 < w2; w1 >>= 1, w2 >>= 1) {
             if ((w1 & 1) != 0) {
-                res = op.apply(res, seg[id(h, w1)]);
+                res = op.apply(res, dat[id(h, w1)]);
                 w1++;
             }
             if ((w2 & 1) != 0) {
                 w2--;
-                res = op.apply(res, seg[id(h, w2)]);
+                res = op.apply(res, dat[id(h, w2)]);
             }
         }
         return res;
