@@ -13,8 +13,7 @@ class LazySegmentTree_Pair {
     final LongBinaryOperator P;
     final int[] Stack = new int[64];
 
-    //初期配列 , dat(関与しない値) , lazy(関与しない値) , dat() , dat&lazy() , lazy() , lazy*len()
-    public LazySegmentTree_Pair(int n, long e0, long e1, BinaryOperator<P> f, LongBinaryOperator g, LongBinaryOperator h, LongBinaryOperator p) {
+    LazySegmentTree_Pair(int n, long e0, long e1, BinaryOperator<P> f, LongBinaryOperator g, LongBinaryOperator h, LongBinaryOperator p) {
         this.E0 = e0;
         this.E1 = e1;
         this.F = f; this.G = g; this.H = h; this.P = p;
@@ -105,12 +104,11 @@ class LazySegmentTree_Pair {
         return Dat[k];
     }
 
-    void debug(){
+    public void debug(){
         for(int i = Dat.length - N ; i < Dat.length - 1; i ++ ) {
-            out.print(Dat[i]+" ");
+            System.out.print(Dat[i]+" ");
         }
-        out.println();
-        out.flush();
+        System.out.println();
     }
 
 }
