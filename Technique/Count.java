@@ -1,3 +1,4 @@
+    // O(logN)で任意の範囲の個数を求めます.
 
     public <T extends Comparable<T>> int LowCountClosed(List<T> A , T key) { 
         return upperbound(A, key); 
