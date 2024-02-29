@@ -1,0 +1,61 @@
+    record HASH(long a , long b) { }
+
+    class RollingHash {
+    
+        private static final int base1 = 1007 , base2 = 2009 ;
+        private static final int mod1 = 1000000007 , mod2 = 1000000009;
+        private long [] hash1 , hash2 , power1 , power2 ;
+        private HASH hash ;
+        private int n , length ;
+
+        RollingHash(HASH hash , int length) {
+            this.hash = hash ;
+            this.length = length;
+        }
+
+        RollingHash(final String s) {
+            this.n = s.length() ;
+            hash1 = new long[n + 1];
+            hash2 = new long[n + 1];
+            power1 = new long[n + 1];
+            power2 = new long[n + 1];
+            Arrays.fill(power1 , 1L);
+            Arrays.fill(power2 , 1L);
+            for(int i = 0 ; i < n ; i ++) {
+                hash1[i + 1] = (hash1[i] * base1 + s.charAt(i)) % mod1 ;
+                hash2[i + 1] = (hash2[i] * base2 + s.charAt(i)) % mod2 ;
+                power1[i + 1] = (power1[i] * base1) % mod1 ;
+                power2[i + 1] = (power2[i] * base2) % mod2 ;
+            }
+            this.hash = get(0 , s.length()).hash ;
+            this.length = s.length() ;
+        }
+        // 区間のハッシュを取得
+        public RollingHash get(int l , int r) {
+            long res1 = hash1[r] - hash1[l] * power1[r - l] % mod1 ;
+            if(res1 < 0) res1 += mod1 ;
+            long res2 = hash2[r] - hash2[l] * power2[r - l] % mod2 ;
+            if(res2 < 0) res2 += mod2;
+            return new RollingHash(new HASH(res1 , res2) , r - l);
+        }
+        // 単一文字列内のマージ
+        public RollingHash merge(int l1 , int r1 , int l2 , int r2) {
+            HASH left = get(l1 , r1).hash , right = get(l2 , r2).hash ;
+            long res1 = (right.a + left.a * power1[r2 - l2]) % mod1 ;
+            long res2 = (right.b + left.b * power2[r2 - l2]) % mod2 ;
+            return new RollingHash(new HASH(res1 , res2) , (r2 - l2) + (r1 - l1));
+        }
+        //　複数の文字列間のマージ
+        public RollingHash merge(RollingHash l , RollingHash r) {
+            HASH left = l.hash , right = r.hash ;
+            long res1 = (right.a + left.a * power1[r.length]) % mod1 ;
+            long res2 = (right.b + left.b * power2[r.length]) % mod2 ;
+            return new RollingHash(new HASH(res1, res2), l.length + r.length);
+        }
+
+        @Override
+        public String toString() {
+            return "hash : " + this.hash.a+" - "+this.hash.b +" len : "+ this.length ;
+        }
+        
+    }
